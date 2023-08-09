@@ -12,5 +12,55 @@ html {
 }
 
 body {
-	background-color: rgb(7, 7, 56);
+	background-color: rgb(221, 221, 221);
+	font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.header {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+
+	&__span {
+		font-weight: 900;
+		font-size: 40px;
+	}
+}
+
+.main {
+	margin-top: 50px;
+	display: flex;
+	&__button {
+		background-color: rgb(255, 255, 255);
+		border: none;
+		border-radius: 10px;
+		width: 80px;
+		height: 80px;
+		cursor: pointer;
+		font-size: 50px;
+		transition: box-shadow 0.3s;
+	}
+
+	&__button:hover {
+		box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.main__modal {
+		display: none;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.2);
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		// display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
