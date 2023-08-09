@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="./dist/css/style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -22,13 +21,47 @@
 
     <main class="main">
         <div class="wrapper">
-            <button id="add-book" class="main__button">+</button>
-            <div class="main__modal"></div>
+            <section class="books">
+                <button type="button" id="add-book" class="books__button">+ Add book</button>
+                <div class="books__cards">
+                    <div class="books__card">
+                        <p class="books__card-title">The Hobbit</p>
+                        <p class="books__card-author">Tolkien</p>
+                        <p class="books__card-pages">295 pages</p>
+                        <p class="books__card-read">read</p>
+                        <button class="books__card-delete">DELETE</button>
+                    </div>
+                    <div class="books__card">
+                        <p class="books__card-title">The Hobbit</p>
+                        <p class="books__card-author">Tolkien</p>
+                        <p class="books__card-pages">295 pages</p>
+                        <p class="books__card-read">read</p>
+                        <button id="delete-btn" class="books__card-delete">DELETE</button>
+                    </div>
+                </div>
+                <div class="books__modal-overlay"></div>
+                <div class="books__modal">
+                    <div class="books__modal-container">
+                        <h2 class="books__modal-header">New Book</h2>
+                        <button class="books__modal-close" type="button">X</button>
+                        <form class="books__modal-form" action="/">
+                            <input id="input-title" type="text" class="books__modal-form-input" required placeholder="Title" maxlength="70">
+                            <input id="input-author" type="text" class="books__modal-form-input" required placeholder="Author" maxlength="70">
+                            <input id="input-pages" type="number" class="books__modal-form-input" required placeholder="Pages" min="1">
+                            <div class="books__modal-form-read">
+                                <label class="books__modal-form-label" for="input-read">Have you read it?</label>
+                                <input id="input-read" type="checkbox" class="books__modal-form-checkbox">
+                            </div>
+                            <button class="books__modal-form-subbmit" type="submit">SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
     <footer class="footer">
-
+        <p>Lorem ipsum dolor sit amet.</p>
     </footer>
 </body>
 
