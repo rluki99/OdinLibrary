@@ -68,21 +68,10 @@ body {
 
 	.books__cards {
 		display: grid;
-		grid-template-columns: repeat(5, 1fr);
+		// grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 		grid-auto-rows: 1fr;
 		gap: 20px;
-
-		@include view(tablet) {
-			grid-template-columns: repeat(3, 1fr);
-		}
-
-		@include view(mobile) {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		@include view(small-mobile) {
-			grid-template-columns: 1fr;
-		}
 	}
 
 	.books__card {
@@ -93,15 +82,13 @@ body {
 		font-size: 20px;
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		justify-content: space-between;
+		gap: 20px;
+		word-wrap: break-word;
 	}
 
 	.books__card > p {
 		border-bottom: 1px solid rgb(221, 221, 221);
-	}
-
-	.books__card > p:last-of-type {
-		border: none;
 	}
 
 	.books__card-title {
@@ -117,6 +104,7 @@ body {
 		font-weight: 700;
 		transition: background-color 0.3s;
 		cursor: pointer;
+		font-size: 16px;
 	}
 
 	.books__card-delete:hover {
@@ -148,7 +136,7 @@ body {
 		align-items: center;
 		justify-content: center;
 		transform: scale(0);
-		transition: 0.3s ease;
+		transition: transform 0.3s ease;
 
 		&--active {
 			transform: scale(1);
@@ -213,7 +201,7 @@ body {
 		}
 	}
 
-	.books__modal-form-subbmit {
+	.books__modal-form-submit {
 		border: none;
 		border-radius: 10px;
 		background-color: rgb(55, 233, 48);
@@ -224,7 +212,7 @@ body {
 		transition: background-color 0.3s;
 	}
 
-	.books__modal-form-subbmit:hover {
+	.books__modal-form-submit:hover {
 		background-color: rgb(221, 221, 221);
 	}
 }
