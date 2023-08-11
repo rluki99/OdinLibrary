@@ -1,11 +1,46 @@
-// BOOKS
+let titleInput
+let authorInput
+let pagesInput
+let readInput
+let submitBookBtn
+let booksCardsDiv
+let addBookBtn
+let closeModalBtn
+let modal
+let modalOverlay
+let formInfo
 
-const titleInput = document.querySelector('#input-title')
-const authorInput = document.querySelector('#input-author')
-const pagesInput = document.querySelector('#input-pages')
-const readInput = document.querySelector('#input-read')
-const submitBookBtn = document.querySelector('.books__modal-form-submit')
-const booksCardsDiv = document.querySelector('.books__cards')
+const main = () => {
+	prepareDOMElements()
+	prepareDOMEvents()
+}
+
+const prepareDOMElements = () => {
+	titleInput = document.querySelector('#input-title')
+	authorInput = document.querySelector('#input-author')
+	pagesInput = document.querySelector('#input-pages')
+	readInput = document.querySelector('#input-read')
+	submitBookBtn = document.querySelector('.books__modal-form-submit')
+	booksCardsDiv = document.querySelector('.books__cards')
+	addBookBtn = document.querySelector('#add-book')
+	closeModalBtn = document.querySelector('.books__modal-close')
+	modal = document.querySelector('.books__modal')
+	modalOverlay = document.querySelector('.books__modal-overlay')
+	formInfo = document.querySelector('.books__modal-form-info')
+}
+
+const prepareDOMEvents = () => {
+	submitBookBtn.addEventListener('click', e => {
+		e.preventDefault()
+		if(!checkInputs()) return
+		getInputsFromForm()
+		clearInputs()
+	})
+
+	addBookBtn.addEventListener('click', openModal)
+	closeModalBtn.addEventListener('click', closeModal)
+	window.addEventListener('click', clickOutsideModal)
+}
 
 let myLibrary = []
 
@@ -16,19 +51,50 @@ function Book(title, author, pages, read) {
 	this.read = read
 }
 
-const addBookToLibrary = () => {
+const addBookToLibrary = (title, author, pages, read) => {
+	const newBook = new Book(title, author, pages, read)
+	myLibrary.push(newBook)
+
+	refreshLibraryDisplay()
+}
+
+const getInputsFromForm = () => {
 	const title = titleInput.value
 	const author = authorInput.value
 	const pages = pagesInput.value
 	const read = readInput.checked ? 'read' : 'not read'
 
-	const newBook = new Book(title, author, pages, read)
-	myLibrary.push(newBook)
-	// console.log(myLibrary)
+	addBookToLibrary(title, author, pages, read)
+}
 
-	addBookToDOM(title, author, pages, read)
+const renderBookCard = book => {
+	const newCard = document.createElement('div')
+	newCard.classList.add('books__card')
+	newCard.innerHTML = `
+	<p class="books__card-title">${book.title}</p>
+	<p class="books__card-author">${book.author}</p>
+	<p class="books__card-pages">${book.pages} pages</p>
+	`
+	const readCardBtn = document.createElement('button')
+	readCardBtn.classList.add('books__card-read')
+	readCardBtn.textContent = book.read
+	book.read === 'read' ? readCardBtn.classList.add('books__card-read--active') : null;
+	readCardBtn.addEventListener('click', () => toggleReadStatus(book, readCardBtn))
 
-	clearInputs()
+	const deleteCardBtn = document.createElement('button')
+	deleteCardBtn.classList.add('books__card-delete')
+	deleteCardBtn.textContent = 'DELETE'
+	deleteCardBtn.addEventListener('click', () => removeBookFromLibrary(myLibrary.indexOf(book)))
+
+	booksCardsDiv.appendChild(newCard)
+	newCard.appendChild(readCardBtn)
+	newCard.appendChild(deleteCardBtn)
+}
+
+const refreshLibraryDisplay = () => {
+	booksCardsDiv.innerHTML = ''
+
+	myLibrary.forEach(book => renderBookCard(book))
 }
 
 const clearInputs = () => {
@@ -36,32 +102,30 @@ const clearInputs = () => {
 	authorInput.value = ''
 	pagesInput.value = ''
 	readInput.checked = false
+	formInfo.style.display = 'none'
+	closeModal()
 }
 
-const addBookToDOM = (title, author, pages, read) => {
-	const newCard = document.createElement('div')
-	newCard.classList.add('books__card')
-	newCard.innerHTML = `
-	<p class="books__card-title">${title}</p>
-	<p class="books__card-author">${author}</p>
-	<p class="books__card-pages">${pages} pages</p>
-	<p class="books__card-read">${read}</p>
-	<button class="books__card-delete">DELETE</button>
-	`
-	booksCardsDiv.appendChild(newCard)
+const checkInputs = () => {
+	if(!titleInput.value || !authorInput.value || !pagesInput.value) {
+		formInfo.style.display = 'block'
+		return false
+	} return true
 }
 
-submitBookBtn.addEventListener('click', e => {
-	e.preventDefault()
-	addBookToLibrary()
-})
+const toggleReadStatus = (book, btn) => {
+	book.read = book.read === 'read' ? 'not read' : 'read';
+	btn.classList.toggle('books__card-read--active')
+	btn.textContent = book.read;
+}
+
+const removeBookFromLibrary = indexOfBook => {
+	myLibrary.splice(indexOfBook, 1)
+
+	refreshLibraryDisplay()
+}
 
 //MODAL DISPLAY
-
-const addBookBtn = document.querySelector('#add-book')
-const closeModalBtn = document.querySelector('.books__modal-close')
-const modal = document.querySelector('.books__modal')
-const modalOverlay = document.querySelector('.books__modal-overlay')
 
 const openModal = () => {
 	modal.classList.add('books__modal--active')
@@ -79,6 +143,4 @@ const clickOutsideModal = e => {
 	}
 }
 
-addBookBtn.addEventListener('click', openModal)
-closeModalBtn.addEventListener('click', closeModal)
-window.addEventListener('click', clickOutsideModal)
+document.addEventListener('DOMContentLoaded', main)

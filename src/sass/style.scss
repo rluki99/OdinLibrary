@@ -95,11 +95,10 @@ body {
 		font-weight: 700;
 	}
 
-	.books__card-delete {
+	.books__card-delete, .books__card-read {
 		width: 100%;
 		border: none;
 		border-radius: 10px;
-		background-color: rgb(247, 112, 112);
 		padding: 10px 5px;
 		font-weight: 700;
 		transition: background-color 0.3s;
@@ -107,7 +106,19 @@ body {
 		font-size: 16px;
 	}
 
-	.books__card-delete:hover {
+	.books__card-read {
+		background-color: rgb(202, 202, 202);
+
+		&--active {
+			background-color: rgb(55, 233, 48)
+		}
+	}
+
+	.books__card-delete {
+		background-color: rgb(247, 112, 112);
+	}
+
+	.books__card-delete:hover, .books__card-read:hover {
 		background-color: rgb(221, 221, 221);
 	}
 
@@ -199,6 +210,14 @@ body {
 			height: 20px;
 			accent-color: rgb(221,221,221);
 		}
+	}
+
+	.books__modal-form-info {
+		font-size: 12px;
+		color: rgb(247, 112, 112);
+		font-weight: 700;
+		text-align: center;
+		display: none;
 	}
 
 	.books__modal-form-submit {
