@@ -30,9 +30,9 @@ const prepareDOMElements = () => {
 }
 
 const prepareDOMEvents = () => {
-	submitBookBtn.addEventListener('click', e => {
+	submitBookBtn.addEventListener('click', (e) => {
 		e.preventDefault()
-		if(!checkInputs()) return
+		if (!checkInputs()) return
 		getInputsFromForm()
 		clearInputs()
 	})
@@ -44,15 +44,25 @@ const prepareDOMEvents = () => {
 
 let myLibrary = []
 
-function Book(title, author, pages, read) {
-	this.title = title
-	this.author = author
-	this.pages = pages
-	this.read = read
+// function Book(title, author, pages, read) {
+// 	this.title = title
+// 	this.author = author
+// 	this.pages = pages
+// 	this.read = read
+// }
+
+const createBook = (title, author, pages, read) => {
+	return {
+		title: title,
+		author: author,
+		pages: pages,
+		read: read,
+	}
 }
 
 const addBookToLibrary = (title, author, pages, read) => {
-	const newBook = new Book(title, author, pages, read)
+	// const newBook = new Book(title, author, pages, read)
+	const newBook = createBook(title, author, pages, read)
 	myLibrary.push(newBook)
 
 	refreshLibraryDisplay()
@@ -67,7 +77,7 @@ const getInputsFromForm = () => {
 	addBookToLibrary(title, author, pages, read)
 }
 
-const renderBookCard = book => {
+const renderBookCard = (book) => {
 	const newCard = document.createElement('div')
 	newCard.classList.add('books__card')
 	newCard.innerHTML = `
@@ -78,7 +88,7 @@ const renderBookCard = book => {
 	const readCardBtn = document.createElement('button')
 	readCardBtn.classList.add('books__card-read')
 	readCardBtn.textContent = book.read
-	book.read === 'read' ? readCardBtn.classList.add('books__card-read--active') : null;
+	book.read === 'read' ? readCardBtn.classList.add('books__card-read--active') : null
 	readCardBtn.addEventListener('click', () => toggleReadStatus(book, readCardBtn))
 
 	const deleteCardBtn = document.createElement('button')
@@ -94,7 +104,7 @@ const renderBookCard = book => {
 const refreshLibraryDisplay = () => {
 	booksCardsDiv.innerHTML = ''
 
-	myLibrary.forEach(book => renderBookCard(book))
+	myLibrary.forEach((book) => renderBookCard(book))
 }
 
 const clearInputs = () => {
@@ -107,19 +117,20 @@ const clearInputs = () => {
 }
 
 const checkInputs = () => {
-	if(!titleInput.value || !authorInput.value || !pagesInput.value) {
+	if (!titleInput.value || !authorInput.value || !pagesInput.value) {
 		formInfo.style.display = 'block'
 		return false
-	} return true
+	}
+	return true
 }
 
 const toggleReadStatus = (book, btn) => {
-	book.read = book.read === 'read' ? 'not read' : 'read';
+	book.read = book.read === 'read' ? 'not read' : 'read'
 	btn.classList.toggle('books__card-read--active')
-	btn.textContent = book.read;
+	btn.textContent = book.read
 }
 
-const removeBookFromLibrary = indexOfBook => {
+const removeBookFromLibrary = (indexOfBook) => {
 	myLibrary.splice(indexOfBook, 1)
 
 	refreshLibraryDisplay()
@@ -137,7 +148,7 @@ const closeModal = () => {
 	modalOverlay.classList.remove('books__modal-overlay--active')
 }
 
-const clickOutsideModal = e => {
+const clickOutsideModal = (e) => {
 	if (e.target == modal) {
 		closeModal()
 	}
