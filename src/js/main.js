@@ -44,6 +44,7 @@ const prepareDOMEvents = () => {
 
 let myLibrary = []
 
+// regular constructor 
 // function Book(title, author, pages, read) {
 // 	this.title = title
 // 	this.author = author
@@ -51,18 +52,31 @@ let myLibrary = []
 // 	this.read = read
 // }
 
-const createBook = (title, author, pages, read) => {
-	return {
-		title: title,
-		author: author,
-		pages: pages,
-		read: read,
+// factory functions
+// const createBook = (title, author, pages, read) => {
+// 	return {
+// 		title: title,
+// 		author: author,
+// 		pages: pages,
+// 		read: read,
+// 	}
+// }
+
+// class
+class Book {
+	constructor(title, author,pages,read) {
+		this.title = title
+		this.author = author
+		this.pages = pages
+		this.read = read
 	}
 }
 
+
 const addBookToLibrary = (title, author, pages, read) => {
 	// const newBook = new Book(title, author, pages, read)
-	const newBook = createBook(title, author, pages, read)
+	// const newBook = createBook(title, author, pages, read)
+	const newBook = new Book(title, author, pages, read)
 	myLibrary.push(newBook)
 
 	refreshLibraryDisplay()
